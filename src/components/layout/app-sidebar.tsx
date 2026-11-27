@@ -10,7 +10,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-
+import { UserAvatar } from "@/components/common/user-avatar";
 import { NavLink } from "react-router";
 
 interface AppSidebarProps {
@@ -49,9 +49,8 @@ export function AppSidebar({
 }: AppSidebarProps) {
   return (
     <div
-      className={`fixed inset-0 z-40 ${
-        mobileOpen ? "visible" : "invisible"
-      } lg:visible lg:relative lg:inset-auto lg:z-0 lg:w-64 lg:shrink-0`}
+      className={`fixed inset-0 z-40 ${mobileOpen ? "visible" : "invisible"
+        } lg:visible lg:relative lg:inset-auto lg:z-0 lg:w-64 lg:shrink-0`}
     >
       {/* Mobile overlay */}
       <button
@@ -62,9 +61,8 @@ export function AppSidebar({
       />
 
       <aside
-        className={`absolute inset-y-0 left-0 flex w-[260px] flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:w-64 lg:translate-x-0 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`absolute inset-y-0 left-0 flex w-[260px] flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:w-64 lg:translate-x-0 ${mobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {/* Brand */}
         <div className="flex h-16 items-center justify-between border-b border-slate-100 px-5">
@@ -129,10 +127,9 @@ export function AppSidebar({
                   to={item.path}
                   onClick={onClose}
                   className={({ isActive }) =>
-                    `flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
-                      isActive
-                        ? "bg-indigo-50 text-indigo-700"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    `flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${isActive
+                      ? "bg-indigo-50 text-indigo-700"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                     }`
                   }
                 >
@@ -166,10 +163,9 @@ export function AppSidebar({
               to="/settings"
               onClick={onClose}
               className={({ isActive }) =>
-                `flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-indigo-50 text-indigo-700"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                `flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${isActive
+                  ? "bg-indigo-50 text-indigo-700"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                 }`
               }
             >
@@ -194,22 +190,12 @@ export function AppSidebar({
         </div>
 
         {/* User profile */}
-        <div className="border-t border-slate-100 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-9 items-center justify-center rounded-full bg-slate-800 text-xs font-bold text-white">
-              AM
-            </div>
-
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-slate-800">
-                Alex Morgan
-              </p>
-              <p className="text-[11px] text-slate-400">
-                Workspace admin
-              </p>
-            </div>
-          </div>
-        </div>
+        <UserAvatar
+          name="Alex Morgan"
+          size="default"
+          className="size-9 shrink-0"
+          fallbackClassName="bg-slate-800 text-white"
+        />
       </aside>
     </div>
   );

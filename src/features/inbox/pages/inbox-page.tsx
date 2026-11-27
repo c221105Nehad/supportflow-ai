@@ -12,7 +12,11 @@ import {
   Users,
 } from "lucide-react";
 
-type ConversationStatus = "Needs reply" | "Open" | "Resolved";
+import { UserAvatar } from "@/components/common/user-avatar";
+import { Input } from "@/components/ui/input";
+
+import { ConversationStatusBadge } from "../components/conversation-status-badge";
+import type { ConversationStatus } from "../types";
 
 type Conversation = {
   id: number;
@@ -98,22 +102,6 @@ const stats = [
 const filters = ["All", "Needs reply", "Open", "Resolved"] as const;
 
 type Filter = (typeof filters)[number];
-
-function StatusBadge({ status }: { status: ConversationStatus }) {
-  const styles: Record<ConversationStatus, string> = {
-    "Needs reply": "bg-amber-50 text-amber-700",
-    Open: "bg-indigo-50 text-indigo-700",
-    Resolved: "bg-emerald-50 text-emerald-700",
-  };
-
-  return (
-    <span
-      className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-semibold ${styles[status]}`}
-    >
-      {status}
-    </span>
-  );
-}
 
 export function InboxPage() {
   const [activeFilter, setActiveFilter] = useState<Filter>("All");
@@ -215,13 +203,13 @@ export function InboxPage() {
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
             />
 
-            <input
+            <Input
               type="search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search conversations..."
               aria-label="Search conversations"
-              className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-9 pr-3 text-xs text-slate-700 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100"
+              className="h-9 w-full border-slate-200 bg-slate-50 pl-9 text-xs text-slate-700 focus-visible:bg-white"
             />
           </div>
         </div>
@@ -234,11 +222,10 @@ export function InboxPage() {
               type="button"
               onClick={() => setActiveFilter(filter)}
               aria-pressed={activeFilter === filter}
-              className={`relative shrink-0 py-3 text-xs font-semibold transition-colors ${
-                activeFilter === filter
+              className={`relative shrink-0 py-3 text-xs font-semibold transition-colors ${activeFilter === filter
                   ? "text-indigo-700"
                   : "text-slate-400 hover:text-slate-700"
-              }`}
+                }`}
             >
               {filter}
 
@@ -257,11 +244,12 @@ export function InboxPage() {
                 key={conversation.id}
                 className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 last:border-b-0 sm:flex-row sm:items-center"
               >
-                <div
-                  className={`flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-bold ${conversation.avatar}`}
-                >
-                  {conversation.initials}
-                </div>
+                <UserAvatar
+                  name={conversation.name}
+                  size="default"
+                  className="size-10 shrink-0"
+                  fallbackClassName={`text-xs font-bold ${conversation.avatar}`}
+                />
 
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -284,7 +272,7 @@ export function InboxPage() {
                 </div>
 
                 <div className="flex shrink-0 items-center sm:justify-end">
-                  <StatusBadge status={conversation.status} />
+                  <ConversationStatusBadge status={conversation.status} />
                 </div>
               </article>
             ))
